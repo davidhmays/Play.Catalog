@@ -59,48 +59,34 @@ namespace Play.Catalog.Service.Controllers
 
         //Using IActionResult, because not looking for specific return type.
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, UpdateItemDto updateItemDto)
+        public async IActionResult Put(Guid id, UpdateItemDto updateItemDto)
         {
-            var existingItem = items.Where(item => item.Id == id).SingleOrDefault();
+            var existingItem = await itemsRepository.GetAsync(id);
 
             if (existingItem == null)
             {
-                var item = new ItemDto(
-                    id,
-                    updateItemDto.Name,
-                    updateItemDto.Description,
-                    updateItemDto.Price,
-                    DateTimeOffset.UtcNow);
-                items.Add(item);
-                return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+                return NotFound();
             }
+            existingItem.Name = updateItemDto.Name;
+            existingItem.Description = updateItemDto.Description;
+            existingItem.Price = updateItemDto.Price;
 
-
-            var updatedItem = existingItem with
-            {
-                Name = updateItemDto.Name,
-                Description = updateItemDto.Description,
-                Price = updateItemDto.Price
-            };
-
-            var index = items.FindIndex(existingItem => existingItem.Id == id);
-            items[index] = updatedItem;
-
+            await itemsRepository.UpdateAsync(existingItem);
             return NoContent();
         }
 
         // DELETE /items/{id}
         [HttpDelete]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var index = items.FindIndex(existingItem => existingItem.Id == id);
+            var item = await itemsRepository.GetAsync(id);
 
-            if (index < 0)
+            if (existingItem == null)
             {
                 return NotFound();
             }
 
-            items.RemoveAt(index);
+            await itemsRepository.RemoveAsync(item.Id);
 
             return NoContent();
         }
