@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Play.Catalog.Service.Dtos;
+using Play.Catalog.Service.Entities;
+using Play.Catalog.Service.Reposiories;
 
 namespace Play.Catalog.Service.Controllers
 {
@@ -13,39 +16,45 @@ namespace Play.Catalog.Service.Controllers
     public class ItemsController : ControllerBase
     {
         //Using a STATIC list to prevent list from being recreated every time 
-        private static readonly List<ItemDto> items = new()
-        {
-            new ItemDto(Guid.NewGuid(), "Potion", "Restores a small amount of HP", 5, DateTimeOffset.UtcNow),
-            new ItemDto(Guid.NewGuid(), "Antidote", "Cures Poison", 7, DateTimeOffset.UtcNow),
-            new ItemDto(Guid.NewGuid(), "Bronze Sword", "Deals a small amount of damage", 20, DateTimeOffset.UtcNow)
-        };
+        private readonly ItemsRepository itemsRepository = new();
+
 
         [HttpGet]
-        public IEnumerable<ItemDto> Get() => items;
-
+        // public IEnumerable<ItemDto> Get() => items;
+        public async Task<IEnumerable<ItemDto>> GetAsync()
+        {
+            // Use extension method to select and convert to a DTO:
+            var items = (await itemsRepository.GetAllAsync())
+                        .Select(item => item.AsDto());
+            return items;
+        }
 
         // Get /items/{id}
         [HttpGet("{id}")]
-        // public ItemDto GetById(Guid id)
-        public ActionResult<ItemDto> GetById(Guid id) => items.SingleOrDefault(item => item.Id == id) is ItemDto item ? item : NotFound();
-        // {
-        //     var item = items.Where(item => item.Id == id).SingleOrDefault();
-        //     if (item == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     return item;
-        // }
+        public async Task<ActionResult<ItemDto>> GetByIdAsync(Guid id)
+        {
+            var item = await itemsRepository.GetAsync(id);
+            return item switch
+            {
+                null => NotFound(),
+                _ => item.AsDto()
+            };
+        }
 
         // POST /items
         [HttpPost]
-        public ActionResult<ItemDto> Post(CreateItemDto createItemDto)
+        public async Task<ActionResult<ItemDto>> PostAsync(CreateItemDto createItemDto)
         {
-            var item = new ItemDto(Guid.NewGuid(), createItemDto.Name, createItemDto.Description, createItemDto.Price, DateTimeOffset.UtcNow);
-            items.Add(item);
-            Debug.Print(nameof(GetById));
+            var item = new Item
+            {
+                Name = createItemDto.Name,
+                Description = createItemDto.Description,
+                Price = createItemDto.Price,
+                CreatedDate = DateTimeOffset.UtcNow
+            };
 
-            return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+            await itemsRepository.CreateAsync(item);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
         }
 
         //Using IActionResult, because not looking for specific return type.
@@ -85,6 +94,12 @@ namespace Play.Catalog.Service.Controllers
         public IActionResult Delete(Guid id)
         {
             var index = items.FindIndex(existingItem => existingItem.Id == id);
+
+            if (index < 0)
+            {
+                return NotFound();
+            }
+
             items.RemoveAt(index);
 
             return NoContent();
