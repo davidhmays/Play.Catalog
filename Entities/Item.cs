@@ -2,6 +2,8 @@ using System;
 
 namespace Play.Catalog.Service.Entities
 {
+    // NOT == to DTOs. Entities define how will be saving to DB.
+    
     public class Item
     {
         public Guid Id { get; set; }

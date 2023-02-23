@@ -30,3 +30,16 @@ C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\obj\Debug\net
 C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\obj\Debug\net7.0\Play.Catalog.Service.pdb
 C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\obj\Debug\net7.0\Play.Catalog.Service.genruntimeconfig.cache
 C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\obj\Debug\net7.0\ref\Play.Catalog.Service.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\AWSSDK.Core.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\AWSSDK.SecurityToken.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\DnsClient.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\MongoDB.Bson.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\MongoDB.Driver.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\MongoDB.Driver.Core.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\MongoDB.Libmongocrypt.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\SharpCompress.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\Snappier.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\ZstdSharp.dll
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\paperspace\Documents\Dev\microServiceScratch\Play.Catalog\bin\Debug\net7.0\runtimes\win\native\mongocrypt.dll
