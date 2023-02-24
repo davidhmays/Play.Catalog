@@ -14,9 +14,9 @@ namespace Play.Catalog.Service.Controllers
     public class ItemsController : ControllerBase
     {
         //Updated to use IItemsRepository interface instead of the repository directly. No more = new(); 
-        private readonly IItemsRepository itemsRepository;
-        
-        public ItemsController(IItemsRepository itemsRepository)
+        private readonly IRepository<Item> itemsRepository;
+
+        public ItemsController(IRepository<Item> itemsRepository)
         {
             this.itemsRepository = itemsRepository;
         }

@@ -2,9 +2,10 @@ using System;
 
 namespace Play.Catalog.Service.Entities
 {
+
     // NOT == to DTOs. Entities define how will be saving to DB.
-    
-    public class Item
+
+    public class Item : IEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -12,6 +13,4 @@ namespace Play.Catalog.Service.Entities
         public decimal Price { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
     }
-
-
 };
